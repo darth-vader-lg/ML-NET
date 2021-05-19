@@ -741,7 +741,7 @@ namespace Microsoft.ML.Transforms
                 {
                     if (_session.graph != null)
                         _session.graph.Dispose();
-                    _session.close();
+                    _session.Dispose();
                 }
             }
             finally

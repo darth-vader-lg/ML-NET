@@ -1997,8 +1997,8 @@ namespace Microsoft.ML.Scenarios
                 tfInputShape = transformer.LastTransformer.TFInputShapes;
             }
 
-            Assert.Equal(imageHeight, tfInputShape.ElementAt(0)[1].dims[0]);
-            Assert.Equal(imageWidth, tfInputShape.ElementAt(0)[2].dims[0]);
+            Assert.Equal(imageHeight, tfInputShape.ElementAt(0)[1]);
+            Assert.Equal(imageWidth, tfInputShape.ElementAt(0)[2]);
         }
     }
 }

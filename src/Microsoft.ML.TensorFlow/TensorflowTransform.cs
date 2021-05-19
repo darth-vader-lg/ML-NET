@@ -516,7 +516,7 @@ namespace Microsoft.ML.Transforms
 
                 if (Session != null && Session != IntPtr.Zero)
                 {
-                    Session.close(); // invoked Dispose()
+                    Session.Dispose(); // invoked Dispose()
                 }
             }
             finally
