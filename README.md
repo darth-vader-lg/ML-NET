@@ -37,7 +37,7 @@ ML.NET runs on Windows, Linux, and macOS using [.NET Core](https://github.com/do
 
 ## ML.NET Nuget packages status
 
-[![NuGet Status](https://img.shields.io/nuget/vpre/Microsoft.ML.svg?style=flat)](https://www.nuget.org/packages/Microsoft.ML/)
+[![NuGet Status](https://img.shields.io/badge/nuget-1.5.6--LG.1-blue)](https://github.com/darth-vader-lg?tab=packages&repo_name=ML-NET)
 
 ## Release notes
 
