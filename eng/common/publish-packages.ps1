@@ -40,7 +40,7 @@ $packages = Get-ChildItem -Path ("artifacts", "packages", $platformDir, "Shippin
 Write-Output "Pushing the packages on GitHub..."
 foreach ($project in $projects) {
     # Check if the project is excluded
-    if ($exclude -match $project.Name) { continue }
+    if ($exclude.Contains($project.Name)) { continue }
     foreach ($package in $packages) {
         if ($package.Name.Contains($project.Name)) {
             $version = $package.Name.Replace(($project.Name, "." -join ''), "")
@@ -48,7 +48,7 @@ foreach ($project in $projects) {
             if ([int]::TryParse($version[0], [ref]$val)) {
                 $version = $version.Replace(".nupkg", "")
                 # Push the package
-                dotnet nuget push $package.FullName --force-english-output --source "https://nuget.pkg.github.com/dart-vader-lg/index.json" --timeout 600 --api-key $apiKey --no-symbols --skip-duplicate
+                dotnet nuget push $package.FullName --force-english-output --skip-duplicate --no-symbols true --timeout 600 --source "https://nuget.pkg.github.com/dart-vader-lg/index.json" --api-key $apiKey
                 break
             }
         }
