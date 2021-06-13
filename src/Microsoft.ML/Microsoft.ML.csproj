@@ -47,8 +47,9 @@
     <PackageReference Include="System.Threading.Channels" Version="$(SystemThreadingChannelsPackageVersion)" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="$(RepoRoot)eng\pkg\CommonPackage.props" Pack="true" PackagePath="build\netstandard2.0\$(MSBuildProjectName).props" />
-    <Content Include="build\**\*" Pack="true" PackagePath="build" />
+    <Content Include="$(RepoRoot)eng\pkg\CommonPackage.props" Pack="true" PackagePath="build\netstandard2.0\$(PrefixId)$(MSBuildProjectName).props" />
+    <Content Condition="Exists('build\$(TargetFramework)\$(MSBuildProjectName).props')" Include="build\$(TargetFramework)\$(MSBuildProjectName).props" Pack="true" PackagePath="build\$(TargetFramework)\$(PrefixId)$(MSBuildProjectName).props" />
+    <Content Condition="Exists('build\$(TargetFramework)\$(MSBuildProjectName).targets')" Include="build\$(TargetFramework)\$(MSBuildProjectName).targets" Pack="true" PackagePath="build\$(TargetFramework)\$(PrefixId)$(MSBuildProjectName).targets" />
   </ItemGroup>
 <PropertyGroup>
   <!--Include Project References output-->

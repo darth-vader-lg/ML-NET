@@ -21,7 +21,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="$(RepoRoot)eng\pkg\CommonPackage.props" Pack="true" PackagePath="build\netstandard2.0\$(MSBuildProjectName).props" />
+    <Content Include="$(RepoRoot)eng\pkg\CommonPackage.props" Pack="true" PackagePath="build\netstandard2.0\$(PrefixId)$(MSBuildProjectName).props" />
   </ItemGroup>
   <ItemGroup>
     <!-- The package reference is in there, so that the build can download the MlNetMklDeps package at build time.

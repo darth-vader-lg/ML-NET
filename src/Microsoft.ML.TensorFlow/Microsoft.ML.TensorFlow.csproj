@@ -13,7 +13,7 @@
   <ItemGroup>
     <PackageReference Include="System.IO.FileSystem.AccessControl" Version="$(SystemIOFileSystemAccessControl)" />
     <PackageReference Include="System.Security.Principal.Windows" Version="$(SystemSecurityPrincipalWindows)" />
-    <PackageReference Include="TensorFlow.NET" Version="$(TensorflowDotNETVersion)" />
+    <PackageReference Include="$(PrefixId)TensorFlow.NET" Version="$(TensorflowDotNETVersion)" />
   </ItemGroup>
 
   <ItemGroup>

@@ -10,6 +10,8 @@
     -->
     <DotNetUseShippingVersions>true</DotNetUseShippingVersions>
     <VersionPrefix>1.5.6</VersionPrefix>
+    <VersionSuffix>rc.1</VersionSuffix>
+    <PrefixId>LG.</PrefixId>
     <PreReleaseVersionLabel>preview</PreReleaseVersionLabel>
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
     <!--ML.NET Core dependencies-->
