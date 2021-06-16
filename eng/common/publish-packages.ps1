@@ -62,14 +62,25 @@ try {
     $packages = Get-ChildItem -Path ([IO.Path]::Combine($scriptRoot, "..", "..", "artifacts", "packages", "$platformDir", "Shipping")) -Filter "*.nupkg"
 
     # List of projects
-    $projects = Get-ChildItem -Path "src" -Directory
+    $prjNameConvert = @{}
+    $prjNameConvert["Microsoft.ML.SamplesUtils"] = "Microsoft.ML.SampleUtils"
+    $projects = Get-ChildItem -Path "src" -Directory | ForEach-Object{
+        if ($_.Name -in $prjNameConvert.Keys) {
+            $prjNameConvert[$_.Name]
+        }
+        else {
+            $_.Name
+        }
+    }
 
     # List of projects to exclude
     $exclude = (`
-        "Microsoft.ML.DnnImageFeaturizer.AlexNet",`
-        "Microsoft.ML.DnnImageFeaturizer.ResNet18",`
-        "Microsoft.ML.DnnImageFeaturizer.ResNet50",`
-        "Microsoft.ML.DnnImageFeaturizer.ResNet101"`
+        "Native",`
+        "Redist"`
+        <#"Microsoft.ML.DnnImageFeaturizer.AlexNet",#>`
+        <#"Microsoft.ML.DnnImageFeaturizer.ResNet18",#>`
+        <#"Microsoft.ML.DnnImageFeaturizer.ResNet50",#>`
+        <#"Microsoft.ML.DnnImageFeaturizer.ResNet101"#>`
     )
 
     # Publish to url
@@ -78,21 +89,26 @@ try {
         Write-Output "Pushing the packages on $url..."
         foreach ($project in $projects) {
             # Check if the project is excluded
-            if ($exclude.Contains($project.Name)) { continue }
+            if ($exclude.Contains($project)) { continue }
             foreach ($package in $packages) {
-                if ($package.Name.Contains($project.Name)) {
-                    # Push the package
-                    $prms = @($package.FullName, "--force-english-output", "--no-symbols",  "true",  "--timeout", $timeout, "--source", $url)
-                    $pathInfo = [System.Uri]$url
-                    if ($pathInfo.IsUnc) {
-                        $prms = $prms + @("--skip-duplicate")
-                        if ($key) { $prms = $prms + @("--api-key", $key) }
+                if ($package.Name.Contains($project)) {
+                    $versionIx = $package.Name.IndexOf($project)
+                    if ($versionIx -gt -1) { $versionIx = $versionIx + $project.Length + 1 } else { continue }
+                    $val = 0
+                    if ([int]::TryParse($package.Name[$versionIx], [ref]$val)) {
+                        # Push the package
+                        $prms = @($package.FullName, "--force-english-output", "--no-symbols",  "true",  "--timeout", $timeout, "--source", $url)
+                        $pathInfo = [System.Uri]$url
+                        if ($pathInfo.IsUnc) {
+                            $prms = $prms + @("--skip-duplicate")
+                            if ($key) { $prms = $prms + @("--api-key", $key) }
+                        }
+                        elseif (-not(Test-Path -PathType Container -Path $url)) {
+                            New-Item -ItemType Directory -Path $url
+                        }
+                        dotnet nuget push $prms
+                        break
                     }
-                    elseif (-not(Test-Path -PathType Container -Path $url)) {
-                        New-Item -ItemType Directory -Path $url
-                    }
-                    dotnet nuget push $prms
-                    break
                 }
             }
         }
@@ -105,12 +121,17 @@ try {
         if ($apiKey -eq "") { $key = $env:NUGET_NUPKG_PUSH_KEY } else { $key = $apiKey }
         foreach ($project in $projects) {
             # Check if the project is excluded
-            if ($exclude.Contains($project.Name)) { continue }
+            if ($exclude.Contains($project)) { continue }
             foreach ($package in $packages) {
-                if ($package.Name.Contains($project.Name)) {
-                    # Push the package
-                    dotnet nuget push $package.FullName --force-english-output --skip-duplicate --no-symbols true --timeout $timeout --source "https://api.nuget.org/v3/index.json" --api-key $key
-                    break
+                if ($package.Name.Contains($project)) {
+                    $versionIx = $package.Name.IndexOf($project)
+                    if ($versionIx -gt -1) { $versionIx = $versionIx + $project.Length + 1 } else { continue }
+                    $val = 0
+                    if ([int]::TryParse($package.Name[$versionIx], [ref]$val)) {
+                        # Push the package
+                        dotnet nuget push $package.FullName --force-english-output --skip-duplicate --no-symbols true --timeout $timeout --source "https://api.nuget.org/v3/index.json" --api-key $key
+                        break
+                    }
                 }
             }
         }
@@ -128,12 +149,17 @@ try {
         if ($apiKey -eq "") { $key = $env:GITHUB_NUPKG_PUSH_KEY } else { $key = $apiKey }
         foreach ($project in $projects) {
             # Check if the project is excluded
-            if ($exclude.Contains($project.Name)) { continue }
+            if ($exclude.Contains($project)) { continue }
             foreach ($package in $packages) {
-                if ($package.Name.Contains($project.Name)) {
-                    # Push the package
-                    dotnet nuget push $package.FullName --force-english-output --skip-duplicate --no-symbols true --timeout $timeout --source $source --api-key $key
-                    break
+                if ($package.Name.Contains($project)) {
+                    $versionIx = $package.Name.IndexOf($project)
+                    if ($versionIx -gt -1) { $versionIx = $versionIx + $project.Length + 1 } else { continue }
+                    $val = 0
+                    if ([int]::TryParse($package.Name[$versionIx], [ref]$val)) {
+                        # Push the package
+                        dotnet nuget push $package.FullName --force-english-output --skip-duplicate --no-symbols true --timeout $timeout --source $source --api-key $key
+                        break
+                    }
                 }
             }
         }

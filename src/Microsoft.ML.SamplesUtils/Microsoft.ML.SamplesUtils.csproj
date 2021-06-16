@@ -9,7 +9,7 @@
     <!--The nuget we publish is named SampleUtils, so this is necessary.
     Still, the namespace expected inside the nuget is named SamplesUtils,
     So the project itself and its code is not to be renamed SampleUtils.-->
-    <PackageId>Microsoft.ML.SampleUtils</PackageId>
+    <PackageId>$(PrefixId)Microsoft.ML.SampleUtils</PackageId>
   </PropertyGroup>
 
   <ItemGroup>
