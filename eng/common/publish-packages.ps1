@@ -3,8 +3,8 @@ Param(
     [string][Alias('c')]$configuration = "Release",
     [string]$platform = $null,
     [string][Alias('k', "api-key")]$apiKey,
-    [string][Alias('u')]$url,
     [int][Alias('t')]$timeout = 3601, # Workaround for the timeout; it must not be a multiple of 60, otherwise it will be ignored
+    [string][Alias('u')]$url,
     [switch][Alias('n')]$nuget,
     [switch][Alias('g')]$github,
     [switch][Alias('h')] $help,
@@ -83,8 +83,14 @@ try {
                 if ($package.Name.Contains($project.Name)) {
                     # Push the package
                     $prms = @($package.FullName, "--force-english-output", "--no-symbols",  "true",  "--timeout", $timeout, "--source", $url)
-                    if (-not(Test-Path -PathType Container -Path $url)) { $prms = $prms + @("--skip-duplicate") }
-                    if ($key) { $prms = $prms + @("--api-key", $key) }
+                    $pathInfo = [System.Uri]$url
+                    if ($pathInfo.IsUnc) {
+                        $prms = $prms + @("--skip-duplicate")
+                        if ($key) { $prms = $prms + @("--api-key", $key) }
+                    }
+                    elseif (-not(Test-Path -PathType Container -Path $url)) {
+                        New-Item -ItemType Directory -Path $url
+                    }
                     dotnet nuget push $prms
                     break
                 }

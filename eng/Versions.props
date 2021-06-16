@@ -9,7 +9,7 @@
         https://github.com/dotnet/arcade/blob/c788ffa83b088cafe9dbffc1cbc8155ba88b2553/Documentation/CorePackages/Versioning.md#output
     -->
     <DotNetUseShippingVersions>true</DotNetUseShippingVersions>
-    <VersionPrefix>1.5.6</VersionPrefix>
+    <VersionPrefix>$(MajorVersion).$(MinorVersion).$(PatchVersion)</VersionPrefix>
     <VersionSuffix>rc.1</VersionSuffix>
     <PrefixId>LG.</PrefixId>
     <PreReleaseVersionLabel>preview</PreReleaseVersionLabel>
@@ -31,7 +31,7 @@
     <SystemSecurityPrincipalWindows>4.5.0</SystemSecurityPrincipalWindows>
     <TensorFlowVersion>2.4.1</TensorFlowVersion>
     <TensorFlowMajorVersion>2</TensorFlowMajorVersion>
-    <TensorflowDotNETVersion>0.40.1</TensorflowDotNETVersion>
+    <TensorflowDotNETVersion>0.40.2</TensorflowDotNETVersion>
     <MicrosoftCodeAnalysisCSharpInternalAnalyzerVersion>3.3.1</MicrosoftCodeAnalysisCSharpInternalAnalyzerVersion>
     <MicrosoftDotNetInteractiveVersion>1.0.0-beta.21155.3</MicrosoftDotNetInteractiveVersion>
     <MicrosoftDotNetInteractiveFormattingVersion>1.0.0-beta.21155.3</MicrosoftDotNetInteractiveFormattingVersion>
