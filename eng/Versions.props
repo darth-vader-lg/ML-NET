@@ -10,7 +10,7 @@
     -->
     <DotNetUseShippingVersions>true</DotNetUseShippingVersions>
     <VersionPrefix>$(MajorVersion).$(MinorVersion).$(PatchVersion)</VersionPrefix>
-    <VersionSuffix>rc.1</VersionSuffix>
+    <VersionSuffix>rc.2</VersionSuffix>
     <PrefixId>LG.</PrefixId>
     <PreReleaseVersionLabel>preview</PreReleaseVersionLabel>
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
