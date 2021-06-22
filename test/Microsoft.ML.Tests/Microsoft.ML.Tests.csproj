@@ -55,6 +55,7 @@
     <PackageReference Include="System.Data.SqlClient" Version="$(SystemDataSqlClientVersion)" />
     <PackageReference Include="Microsoft.ML.OnnxRuntime" Version="$(MicrosoftMLOnnxRuntimePackageVersion)" />
     <PackageReference Include="System.Data.SQLite.Core" Version="$(SystemDataSQLiteCoreVersion)" />
+    <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="5.0.0" />
   </ItemGroup>
 
   <ItemGroup>
