@@ -15,8 +15,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Content Include="$(RepoRoot)eng\pkg\CommonPackage.props" Pack="true" PackagePath="build\netstandard2.0\$(PrefixId)$(MSBuildProjectName).props" />
-    <Content Condition="!Exists('lib\netstandard2.0\*.*')" Include="$(RepoRoot)eng\pkg\_._" Pack="false" PackagePath="lib\netstandard2.0\" />
-    <Content Include="$(NUGET_PACKAGES)\mlnetmkldeps\$(MlNetMklDepsPackageVersion)\LICENSE.txt" Pack="true" PackagePath="" />
+    <Content Condition="!Exists('lib\netstandard2.0\*.*')" Include="$(RepoRoot)eng\pkg\_._" Pack="true" PackagePath="lib\netstandard2.0\" />
+    <Content Include="$(NuGetPackageRoot)mlnetmkldeps\$(MlNetMklDepsPackageVersion)\LICENSE.txt" Pack="true" PackagePath="" />
   </ItemGroup>
   <Target DependsOnTargets="ResolveReferences" Name="CopyProjectReferencesToPackage">
     <ItemGroup>
