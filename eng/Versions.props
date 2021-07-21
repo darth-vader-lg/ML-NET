@@ -10,7 +10,7 @@
     -->
     <DotNetUseShippingVersions>true</DotNetUseShippingVersions>
     <VersionPrefix>$(MajorVersion).$(MinorVersion).$(PatchVersion)</VersionPrefix>
-    <VersionSuffix>rc.2</VersionSuffix>
+    <VersionSuffix></VersionSuffix>
     <PrefixId>LG.</PrefixId>
     <PreReleaseVersionLabel>preview</PreReleaseVersionLabel>
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
@@ -24,7 +24,7 @@
     <LightGBMPackageVersion>2.3.1</LightGBMPackageVersion>
     <MicrosoftExtensionsPackageVersion>2.1.0</MicrosoftExtensionsPackageVersion>
     <MicrosoftMLOnnxRuntimePackageVersion>1.6.0</MicrosoftMLOnnxRuntimePackageVersion>
-    <MlNetMklDepsPackageVersion>0.0.0.9</MlNetMklDepsPackageVersion>
+    <MlNetMklDepsPackageVersion>0.0.0.12</MlNetMklDepsPackageVersion>
     <ParquetDotNetPackageVersion>2.1.3</ParquetDotNetPackageVersion>
     <SystemDrawingCommonPackageVersion>4.5.0</SystemDrawingCommonPackageVersion>
     <SystemIOFileSystemAccessControl>4.5.0</SystemIOFileSystemAccessControl>
@@ -78,7 +78,7 @@
     <MicrosoftBuildTasksCoreVersion>15.7.179</MicrosoftBuildTasksCoreVersion>
     <MicrosoftBuildUtilitiesCoreVersion>15.7.179</MicrosoftBuildUtilitiesCoreVersion>
     <MicrosoftCodeAnalysisAnalyzersVersion>2.6.3</MicrosoftCodeAnalysisAnalyzersVersion>
-    <MicrosoftCodeAnalysisCSharpVersion>2.9.0</MicrosoftCodeAnalysisCSharpVersion>
+    <MicrosoftCodeAnalysisCSharpVersion>3.7.0</MicrosoftCodeAnalysisCSharpVersion>
     <MsbuildTaskMicrosoftCodeAnalysisCSharpVersion>3.4.0</MsbuildTaskMicrosoftCodeAnalysisCSharpVersion>
     <MicrosoftIdentityModelClientsActiveDirectoryVersion>3.19.8</MicrosoftIdentityModelClientsActiveDirectoryVersion>
     <MicrosoftRestClientRuntimeVersion>2.3.13</MicrosoftRestClientRuntimeVersion>
