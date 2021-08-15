@@ -7,8 +7,8 @@
     <IsSymbolsPackage Condition="$(MSBuildProjectName.Contains('.snupkg'))">true</IsSymbolsPackage>
     <PackageIdFolderName>$(MSBuildProjectName.Replace('.symbols', ''))</PackageIdFolderName>
     <PackageId>$(PrefixId)$(MSBuildProjectName.Replace('.symbols', ''))</PackageId>
-    <PackageVersion Condition="$(VersionSuffix) == ''">$(MajorVersion).$(MinorVersion).$(PatchVersion)</PackageVersion>
-    <PackageVersion Condition="$(VersionSuffix) != ''">$(MajorVersion).$(MinorVersion).$(PatchVersion)-$(VersionSuffix)</PackageVersion>
+    <PackageVersion Condition="$(VersionSuffix) == ''">$(MajorVersion).$(MinorVersion).$(PatchVersion).$(BuildVersion)</PackageVersion>
+    <PackageVersion Condition="$(VersionSuffix) != ''">$(MajorVersion).$(MinorVersion).$(PatchVersion).$(BuildVersion)-$(VersionSuffix)</PackageVersion>
     <IncludeBuildOutput>true</IncludeBuildOutput>
     <IsPackable>true</IsPackable>
 
