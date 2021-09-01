@@ -16,10 +16,11 @@ using Microsoft.ML.Internal.Utilities;
 using Microsoft.ML.Runtime;
 using Microsoft.ML.TensorFlow;
 using Microsoft.ML.Transforms;
-using NumSharp;
 using Tensorflow;
 using static Microsoft.ML.TensorFlow.TensorFlowUtils;
 using static Tensorflow.Binding;
+using NDArray = Tensorflow.NumPy.NDArray;
+using TensorShape = Tensorflow.Shape;
 using Utils = Microsoft.ML.Internal.Utilities.Utils;
 
 [assembly: LoadableClass(TensorFlowTransformer.Summary, typeof(IDataTransform), typeof(TensorFlowTransformer),
@@ -351,7 +352,7 @@ namespace Microsoft.ML.Transforms
                     throw host.ExceptParam(nameof(session), $"Input type '{tfInputType}' of input column '{input}' is not supported in TensorFlow");
 
                 tfInputTypes[index] = tfInputType;
-                tfInputShapes[index] = ((Tensor)inputTensor).TensorShape;
+                tfInputShapes[index] = ((Tensor)inputTensor).shape;
                 tfInputOperations[index] = (inputTensor, inputTensorIndex);
                 index++;
             }
@@ -404,10 +405,10 @@ namespace Microsoft.ML.Transforms
                 // This is the work around in absence of reshape transformer.
                 var idims = shape.dims;
 
-                int[] dims = idims;
+                var dims = idims;
                 if (treatOutputAsBatched)
                 {
-                    dims = shape.ndim > 0 ? idims.Skip(idims[0] == -1 ? 1 : 0).ToArray() : new int[0];
+                    dims = shape.ndim > 0 ? idims.Skip(idims[0] == -1 ? 1 : 0).ToArray() : new long[0];
                 }
                 for (int j = 0; j < dims.Length; j++)
                     dims[j] = dims[j] == -1 ? 0 : dims[j];
@@ -418,7 +419,7 @@ namespace Microsoft.ML.Transforms
                 else
                 {
                     var type = Tf2MlNetType(tfOutputType);
-                    outputTypes[i] = new VectorDataViewType(type, dims);
+                    outputTypes[i] = new VectorDataViewType(type, dims.Select(d => (int)d).ToArray());
                 }
 
                 tfOutputTypes[i] = tfOutputType;
@@ -573,7 +574,7 @@ namespace Microsoft.ML.Transforms
                         }
                         else
                             // for primitive type use default TensorShape
-                            _fullySpecifiedShapes[i] = new TensorShape();
+                            _fullySpecifiedShapes[i] = TensorShape.Null;
                     }
                     else
                     {
@@ -581,7 +582,7 @@ namespace Microsoft.ML.Transforms
                         var colTypeDims = vecType.Dimensions.Select(dim => (int)dim).ToArray();
                         // If the column is one dimension we make sure that the total size of the TF shape matches.
                         // Compute the total size of the known dimensions of the shape.
-                        int valCount = 1;
+                        long valCount = 1;
                         int numOfUnkDim = 0;
                         foreach (var s in shape)
                         {
@@ -615,9 +616,9 @@ namespace Microsoft.ML.Transforms
                             throw Contracts.Except($"Input shape mismatch: Input '{_parent.Inputs[i]}' has shape {originalShape.ToString()}, but input data is of length {typeValueCount}.");
 
                         // Fill in the unknown dimensions.
-                        var l = new int[originalShapeNdim];
+                        var l = new long[originalShapeNdim];
                         for (int ishape = 0; ishape < originalShapeNdim; ishape++)
-                            l[ishape] = originalShapeDims[ishape] == -1 ? (int)d : originalShapeDims[ishape];
+                            l[ishape] = originalShapeDims[ishape] == -1 ? (long)d : originalShapeDims[ishape];
                         _fullySpecifiedShapes[i] = new TensorShape(l);
                     }
 
@@ -626,7 +627,7 @@ namespace Microsoft.ML.Transforms
                         // ndim of default TensorShape is -1, make originDim to 0 in this case.
                         // after addBatchDimension, input column will be changed: type -> type[]
                         var originDim = _fullySpecifiedShapes[i].ndim < 0 ? 0 : _fullySpecifiedShapes[i].ndim;
-                        var l = new int[originDim + 1];
+                        var l = new long[originDim + 1];
                         l[0] = 1;
                         for (int ishape = 1; ishape < l.Length; ishape++)
                             l[ishape] = _fullySpecifiedShapes[i].dims[ishape - 1];
@@ -718,7 +719,7 @@ namespace Microsoft.ML.Transforms
                             UpdateCacheIfNeeded(input.Position, srcTensorGetters, activeOutputColNames, outputCache);
 
                             var tensor = outputCache.Outputs[_parent.Outputs[iinfo]];
-                            var tensorSize = tensor.TensorShape.dims.Where(x => x > 0).Aggregate((x, y) => x * y);
+                            var tensorSize = tensor.shape.dims.Where(x => x > 0).Aggregate((x, y) => x * y);
 
                             var editor = VBufferEditor.Create(ref dst, (int)tensorSize);
                             FetchStringData(tensor, editor.Values);
@@ -733,11 +734,11 @@ namespace Microsoft.ML.Transforms
                             UpdateCacheIfNeeded(input.Position, srcTensorGetters, activeOutputColNames, outputCache);
 
                             var tensor = outputCache.Outputs[_parent.Outputs[iinfo]];
-                            var tensorSize = tensor.TensorShape.dims.Where(x => x > 0).Aggregate((x, y) => x * y);
+                            var tensorSize = tensor.shape.dims.Where(x => x > 0).Aggregate((x, y) => x * y);
 
                             var editor = VBufferEditor.Create(ref dst, (int)tensorSize);
 
-                            tensor.CopyTo<T>(editor.Values);
+                            TensorTypeExtensions.CopyTo(tensor, editor.Values);
                             dst = editor.Commit();
                         };
                         return valuegetter;

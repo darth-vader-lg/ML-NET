@@ -28,6 +28,7 @@ using static Microsoft.ML.Data.TextLoader;
 using static Microsoft.ML.TensorFlow.TensorFlowUtils;
 using static Tensorflow.Binding;
 using Column = Microsoft.ML.Data.TextLoader.Column;
+using TensorShape = Tensorflow.Shape;
 
 [assembly: LoadableClass(ImageClassificationTrainer.Summary, typeof(ImageClassificationTrainer),
     typeof(ImageClassificationTrainer.Options),
@@ -958,8 +959,8 @@ namespace Microsoft.ML.Vision
                 metrics.Train = new TrainMetrics();
                 float accuracy = 0;
                 float crossentropy = 0;
-                var labelTensorShape = _labelTensor.TensorShape.dims.Select(x => (long)x).ToArray();
-                var featureTensorShape = _bottleneckInput.TensorShape.dims.Select(x => (long)x).ToArray();
+                var labelTensorShape = _labelTensor.shape.dims.Select(x => (long)x).ToArray();
+                var featureTensorShape = _bottleneckInput.shape.dims.Select(x => (long)x).ToArray();
                 byte[] buffer = new byte[sizeof(int)];
                 trainSetFeatureReader.Read(buffer, 0, 4);
                 int trainingExamples = BitConverter.ToInt32(buffer, 0);
@@ -1101,12 +1102,12 @@ namespace Microsoft.ML.Vision
                 {
                     // Add learning rate as a placeholder only when learning rate scheduling is used.
                     metrics.Train.LearningRate = learningRateScheduler.GetLearningRate(trainState);
-                    runner.AddInput(new Tensor(metrics.Train.LearningRate, TF_DataType.TF_FLOAT), 2);
+                    runner.AddInput(new Tensor(metrics.Train.LearningRate), 2);
                 }
 
-                var outputTensors = runner.AddInput(new Tensor(featureBufferPtr, featureTensorShape, TF_DataType.TF_FLOAT, featuresFileBytesRead), 0)
-                                    .AddInput(new Tensor(labelBufferPtr, labelTensorShape, TF_DataType.TF_INT64, labelFileBytesRead), 1)
-                                    .Run();
+                var t0 = new Tensor(new SafeTensorHandle(c_api.TF_NewTensor(TF_DataType.TF_FLOAT, featureTensorShape, featureTensorShape.Length, featureBufferPtr, (ulong)featuresFileBytesRead)));
+                var t1 = new Tensor(new SafeTensorHandle(c_api.TF_NewTensor(TF_DataType.TF_INT64, labelTensorShape, labelTensorShape.Length, labelBufferPtr, (ulong)labelFileBytesRead)));
+                var outputTensors = runner.AddInput(t0, 0).AddInput(t1, 1).Run();
 
                 metrics.Train.BatchProcessedCount += 1;
                 metricsAggregator(outputTensors, metrics);
@@ -1168,7 +1169,7 @@ namespace Microsoft.ML.Vision
             {
                 tf_with(tf.name_scope("correct_prediction"), delegate
                 {
-                    _prediction = tf.argmax(resultTensor, 1);
+                    _prediction = tf.math.argmax(resultTensor, 1);
                     correctPrediction = tf.equal(_prediction, groundTruthTensor);
                 });
 
@@ -1222,7 +1223,7 @@ namespace Microsoft.ML.Vision
             string scoreColumnName, Tensor bottleneckTensor, bool isTraining, bool useLearningRateScheduler,
             float learningRate)
         {
-            var bottleneckTensorDims = bottleneckTensor.TensorShape.dims;
+            var bottleneckTensorDims = bottleneckTensor.shape.dims;
             var (batch_size, bottleneck_tensor_size) = (bottleneckTensorDims[0], bottleneckTensorDims[1]);
             tf_with(tf.name_scope("input"), scope =>
             {
@@ -1230,7 +1231,7 @@ namespace Microsoft.ML.Vision
                 {
                     _bottleneckInput = tf.placeholder_with_default(
                         bottleneckTensor,
-                        shape: bottleneckTensorDims,
+                        shape: bottleneckTensorDims.Select(d => (int)d).ToArray(),
                         name: "BottleneckInputPlaceholder");
                     if (useLearningRateScheduler)
                         _learningRateInput = tf.placeholder(tf.float32, null, name: "learningRateInputPlaceholder");
@@ -1246,7 +1247,7 @@ namespace Microsoft.ML.Vision
                 ResourceVariable layerWeights = null;
                 tf_with(tf.name_scope("weights"), delegate
                 {
-                    var initialValue = tf.truncated_normal(new int[] { bottleneck_tensor_size, classCount },
+                    var initialValue = tf.truncated_normal(new int[] { (int)bottleneck_tensor_size, classCount },
                         stddev: 0.001f);
 
                     layerWeights = tf.Variable(initialValue, name: "final_weights");
@@ -1461,7 +1462,7 @@ namespace Microsoft.ML.Vision
                 if (processedTensor != null)
                 {
                     var outputTensor = _runner.AddInput(processedTensor, 0).Run();
-                    outputTensor[0].CopyTo(classProbabilities);
+                    TensorTypeExtensions.CopyTo(outputTensor[0], classProbabilities);
                     outputTensor[0].Dispose();
                     processedTensor.Dispose();
                 }

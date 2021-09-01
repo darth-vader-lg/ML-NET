@@ -2056,7 +2056,7 @@ namespace Microsoft.ML.Scenarios
                 new TextLoader.Column("name", DataKind.String, 1)
             });
 
-            Tensorflow.TensorShape[] tfInputShape;
+            Tensorflow.Shape[] tfInputShape;
 
             using (var tfModel = _mlContext.Model.LoadTensorFlowModel(modelLocation))
             {
