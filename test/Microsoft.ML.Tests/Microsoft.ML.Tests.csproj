@@ -33,6 +33,7 @@
     <ProjectReference Include="..\..\src\Microsoft.ML.CpuMath\Microsoft.ML.CpuMath.csproj" />
     <ProjectReference Include="..\Microsoft.ML.Predictor.Tests\Microsoft.ML.Predictor.Tests.csproj" />
     <ProjectReference Include="..\Microsoft.ML.TestFramework\Microsoft.ML.TestFramework.csproj" />
+    <ProjectReference Include="..\..\src\Microsoft.ML.Torch\Microsoft.ML.Torch.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -56,6 +57,8 @@
     <PackageReference Include="Microsoft.ML.OnnxRuntime" Version="$(MicrosoftMLOnnxRuntimePackageVersion)" />
     <PackageReference Include="System.Data.SQLite.Core" Version="$(SystemDataSQLiteCoreVersion)" />
     <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="5.0.0" />
+    <PackageReference Include="TorchSharp" Version="$(TorchSharpVersion)" />
+    <PackageReference Include="libtorch-cpu" Version="$(LibTorchRedistVersion)" />
   </ItemGroup>
 
   <ItemGroup>

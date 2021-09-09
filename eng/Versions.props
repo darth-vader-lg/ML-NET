@@ -32,6 +32,8 @@
     <TensorFlowVersion>2.6.0</TensorFlowVersion>
     <TensorFlowMajorVersion>2</TensorFlowMajorVersion>
     <TensorflowDotNETVersion>0.60.3.1</TensorflowDotNETVersion>
+    <TorchSharpVersion>0.2.0-preview-27930-2</TorchSharpVersion>
+    <LibTorchRedistVersion>1.9.0.10</LibTorchRedistVersion>
     <MicrosoftCodeAnalysisCSharpInternalAnalyzerVersion>3.3.1</MicrosoftCodeAnalysisCSharpInternalAnalyzerVersion>
     <MicrosoftDotNetInteractiveVersion>1.0.0-beta.21155.3</MicrosoftDotNetInteractiveVersion>
     <MicrosoftDotNetInteractiveFormattingVersion>1.0.0-beta.21155.3</MicrosoftDotNetInteractiveFormattingVersion>

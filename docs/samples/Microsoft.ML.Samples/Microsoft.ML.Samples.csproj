@@ -26,6 +26,7 @@
     <ProjectReference Include="..\..\..\src\Microsoft.ML.FastTree\Microsoft.ML.FastTree.csproj" />
     <ProjectReference Include="..\..\..\src\Microsoft.ML.Recommender\Microsoft.ML.Recommender.csproj" />
     <ProjectReference Include="..\..\..\src\Microsoft.ML.TensorFlow\Microsoft.ML.TensorFlow.csproj" />
+    <ProjectReference Include="..\..\..\src\Microsoft.ML.Torch\Microsoft.ML.Torch.csproj" />
     <ProjectReference Include="..\..\..\src\Microsoft.ML.TimeSeries\Microsoft.ML.TimeSeries.csproj" />
     <ProjectReference Include="..\..\..\src\Microsoft.ML.DnnImageFeaturizer.ResNet18\Microsoft.ML.DnnImageFeaturizer.ResNet18.csproj" />
     <ProjectReference Include="..\..\..\src\Microsoft.ML.Transforms\Microsoft.ML.Transforms.csproj" />
@@ -977,6 +978,8 @@
     <PackageReference Include="Microsoft.ML.Onnx.TestModels" Version="$(MicrosoftMLOnnxTestModelsVersion)" />
     <PackageReference Include="$(PrefixId)SciSharp.TensorFlow.Redist" Version="$(TensorFlowVersion)" />
     <PackageReference Include="Microsoft.ML.OnnxRuntime" Version="$(MicrosoftMLOnnxRuntimePackageVersion)" />
+    <PackageReference Include="TorchSharp" Version="$(TorchSharpVersion)" />
+    <PackageReference Include="libtorch-cpu" Version="$(LibTorchRedistVersion)" />
   </ItemGroup>
 
     <ItemGroup>

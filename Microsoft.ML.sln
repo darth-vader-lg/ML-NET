@@ -149,6 +149,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Data.Analysis.Tes
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Data.Analysis.Interactive.Tests", "test\Microsoft.Data.Analysis.Interactive.Tests\Microsoft.Data.Analysis.Interactive.Tests.csproj", "{8AFB8CC3-DA0B-4364-BFB3-296A7C54CC25}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.ML.Torch", "src\Microsoft.ML.Torch\Microsoft.ML.Torch.csproj", "{5555DC0C-1638-4C2D-85F4-9F7A52030FE0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -1784,6 +1786,30 @@ Global
 		{8AFB8CC3-DA0B-4364-BFB3-296A7C54CC25}.Release-netfx|Any CPU.Build.0 = Release-netfx|Any CPU
 		{8AFB8CC3-DA0B-4364-BFB3-296A7C54CC25}.Release-netfx|x64.ActiveCfg = Release-netfx|Any CPU
 		{8AFB8CC3-DA0B-4364-BFB3-296A7C54CC25}.Release-netfx|x64.Build.0 = Release-netfx|Any CPU
+		{5555DC0C-1638-4C2D-85F4-9F7A52030FE0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5555DC0C-1638-4C2D-85F4-9F7A52030FE0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5555DC0C-1638-4C2D-85F4-9F7A52030FE0}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{5555DC0C-1638-4C2D-85F4-9F7A52030FE0}.Debug|x64.Build.0 = Debug|Any CPU
+		{5555DC0C-1638-4C2D-85F4-9F7A52030FE0}.Debug-netcoreapp3_1|Any CPU.ActiveCfg = Debug-netcoreapp3_1|Any CPU
+		{5555DC0C-1638-4C2D-85F4-9F7A52030FE0}.Debug-netcoreapp3_1|Any CPU.Build.0 = Debug-netcoreapp3_1|Any CPU
+		{5555DC0C-1638-4C2D-85F4-9F7A52030FE0}.Debug-netcoreapp3_1|x64.ActiveCfg = Debug-netcoreapp3_1|Any CPU
+		{5555DC0C-1638-4C2D-85F4-9F7A52030FE0}.Debug-netcoreapp3_1|x64.Build.0 = Debug-netcoreapp3_1|Any CPU
+		{5555DC0C-1638-4C2D-85F4-9F7A52030FE0}.Debug-netfx|Any CPU.ActiveCfg = Debug-netfx|Any CPU
+		{5555DC0C-1638-4C2D-85F4-9F7A52030FE0}.Debug-netfx|Any CPU.Build.0 = Debug-netfx|Any CPU
+		{5555DC0C-1638-4C2D-85F4-9F7A52030FE0}.Debug-netfx|x64.ActiveCfg = Debug-netfx|Any CPU
+		{5555DC0C-1638-4C2D-85F4-9F7A52030FE0}.Debug-netfx|x64.Build.0 = Debug-netfx|Any CPU
+		{5555DC0C-1638-4C2D-85F4-9F7A52030FE0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5555DC0C-1638-4C2D-85F4-9F7A52030FE0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5555DC0C-1638-4C2D-85F4-9F7A52030FE0}.Release|x64.ActiveCfg = Release|Any CPU
+		{5555DC0C-1638-4C2D-85F4-9F7A52030FE0}.Release|x64.Build.0 = Release|Any CPU
+		{5555DC0C-1638-4C2D-85F4-9F7A52030FE0}.Release-netcoreapp3_1|Any CPU.ActiveCfg = Release-netcoreapp3_1|Any CPU
+		{5555DC0C-1638-4C2D-85F4-9F7A52030FE0}.Release-netcoreapp3_1|Any CPU.Build.0 = Release-netcoreapp3_1|Any CPU
+		{5555DC0C-1638-4C2D-85F4-9F7A52030FE0}.Release-netcoreapp3_1|x64.ActiveCfg = Release-netcoreapp3_1|Any CPU
+		{5555DC0C-1638-4C2D-85F4-9F7A52030FE0}.Release-netcoreapp3_1|x64.Build.0 = Release-netcoreapp3_1|Any CPU
+		{5555DC0C-1638-4C2D-85F4-9F7A52030FE0}.Release-netfx|Any CPU.ActiveCfg = Release-netfx|Any CPU
+		{5555DC0C-1638-4C2D-85F4-9F7A52030FE0}.Release-netfx|Any CPU.Build.0 = Release-netfx|Any CPU
+		{5555DC0C-1638-4C2D-85F4-9F7A52030FE0}.Release-netfx|x64.ActiveCfg = Release-netfx|Any CPU
+		{5555DC0C-1638-4C2D-85F4-9F7A52030FE0}.Release-netfx|x64.Build.0 = Release-netfx|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -1857,6 +1883,7 @@ Global
 		{D9FDD2D5-BFFC-4A4D-8589-7F63AA3EA923} = {09EADF06-BE25-4228-AB53-95AE3E15B530}
 		{0B765344-11A4-4738-9759-5060599DC134} = {AED9C836-31E3-4F3F-8ABC-929555D3F3C4}
 		{8AFB8CC3-DA0B-4364-BFB3-296A7C54CC25} = {AED9C836-31E3-4F3F-8ABC-929555D3F3C4}
+		{5555DC0C-1638-4C2D-85F4-9F7A52030FE0} = {09EADF06-BE25-4228-AB53-95AE3E15B530}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {41165AF1-35BB-4832-A189-73060F82B01D}
