@@ -306,7 +306,6 @@ dotnet_diagnostic.IDE2004.severity = warning
 dotnet_diagnostic.CA1822.severity = suggestion
 
 [test/**/*.cs]
-
 # MSML_GeneralName: This name should be PascalCased
 dotnet_diagnostic.MSML_GeneralName.severity = none
 
